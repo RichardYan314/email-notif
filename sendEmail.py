@@ -1,12 +1,10 @@
 import smtplib, ssl
 from email.message import EmailMessage
-
+from auth import *
 
 def send(subject, body):
     port = 465  # For SSL
     smtp_server = "smtp.qq.com"
-
-    from auth import *
 
     msg = EmailMessage()
     msg['From'] = sender_email
@@ -20,7 +18,7 @@ def send(subject, body):
             server.login(sender_email, password)
             server.send_message(msg)
     except smtplib.SMTPAuthenticationError as e:
-        print(e.smtp_code, e.smtp_error.decode("GBK"))
+        logging.error(e.smtp_code, e.smtp_error.decode("GBK"))
 
 
 if __name__ == "__main__":
